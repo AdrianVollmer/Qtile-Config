@@ -179,6 +179,7 @@ def create_bar(include_systray=True, screen_index=0):
             background=colors["yellow"],
             format="\uf017 %a %b %d  %I:%M %p",
             padding=10,
+            update_interval=1.0,
             mouse_callbacks={
                 "Button1": lambda: subprocess.Popen(
                     [
