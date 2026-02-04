@@ -14,7 +14,7 @@ from qtile_extras.resources import wallpapers
 
 # Import modular configuration
 from settings import mod, terminal, autostart_programs, workspace_mode
-from theme import create_bar, widget_defaults, extension_defaults  # noqa
+from theme import create_bar, widget_defaults, extension_defaults, create_sysinfo  # noqa
 from layouts import layouts, floating_layout  # noqa
 from keys import keys, groups  # noqa
 
@@ -47,10 +47,11 @@ for vt in range(1, 8):
 # Only the first screen gets the systray
 MAX_SCREENS = 6
 screens = []
+sysinfo = create_sysinfo()
 for i in range(MAX_SCREENS):
     screens.append(
         Screen(
-            top=create_bar(include_systray=(i == 0), screen_index=i),
+            top=create_bar(sysinfo, include_systray=(i == 0), screen_index=i),
             wallpaper=wallpapers.WALLPAPER_TRIANGLES,
             wallpaper_mode="fill",
         )

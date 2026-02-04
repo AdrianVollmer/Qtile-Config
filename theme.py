@@ -61,66 +61,8 @@ def powerline_sep(fg_color, bg_color, direction="left"):
         )
 
 
-def create_bar(include_systray=True, screen_index=0):
-    """Create the status bar with widgets"""
+def create_sysinfo():
     widgets = [
-        # Left side - Logo and groups
-        widget.TextBox(
-            text="\uf013",  # Settings/menu icon
-            fontsize=14,
-            foreground=colors["blue"],
-            background=colors["base03"],
-            padding=10,
-            mouse_callbacks={"Button1": lambda: subprocess.Popen(["bash", f"{CONFIG_DIR}/system_menu.sh"])},
-        ),
-        widget.GroupBox(
-            fontsize=14,
-            # Text colors - clear visual hierarchy
-            active=colors["yellow"],          # Groups with windows (not current) = YELLOW
-            inactive=colors["base01"],        # Empty groups = dark gray
-            # Highlight method
-            highlight_method="block",
-            # Border colors - THIS SCREEN
-            this_current_screen_border=colors["cyan"],     # ← YOUR ACTIVE GROUP (cyan border!)
-            this_screen_border=colors["base02"],           # Other groups on this screen
-            # Border colors - OTHER SCREENS
-            other_current_screen_border=colors["blue"],    # Active on other screen (blue)
-            other_screen_border=colors["base02"],          # Other groups on other screens
-            # Special states
-            urgent_border=colors["red"],
-            # Background colors
-            background=colors["base03"],
-            highlight_color=colors["base02"],
-            block_highlight_text_color=colors["base3"],    # Current group = BRIGHT WHITE
-            # Filter to show only this screen's groups (1-9 for this screen)
-            visible_groups=[f"screen{screen_index}_{i}" for i in range(1, 10)],
-            # Style
-            rounded=False,
-            padding_x=10,
-            padding_y=8,
-            borderwidth=3,
-            disable_drag=True,
-            use_mouse_wheel=False,
-        ),
-        powerline_sep(colors["base03"], colors["base02"]),
-        widget.CurrentLayout(
-            foreground=colors["yellow"],
-            background=colors["base02"],
-            padding=10,
-            fmt=" {}",
-        ),
-        powerline_sep(colors["base02"], colors["base03"]),
-        widget.Prompt(
-            foreground=colors["green"],
-            background=colors["base03"],
-            prompt="  ",
-        ),
-        widget.WindowName(
-            foreground=colors["base0"],
-            background=colors["base03"],
-            max_chars=60,
-            padding=10,
-        ),
         # Right side - System info
         powerline_sep(colors["base02"], colors["base03"], direction="right"),
         widget.CPU(
@@ -199,6 +141,72 @@ def create_bar(include_systray=True, screen_index=0):
         powerline_sep(colors["orange"], colors["yellow"], direction="right"),
     ]
 
+    return widgets
+
+
+def create_bar(sysinfo, include_systray=True, screen_index=0):
+    """Create the status bar with widgets"""
+    widgets = [
+        # Left side - Logo and groups
+        widget.TextBox(
+            text="\uf013",  # Settings/menu icon
+            fontsize=14,
+            foreground=colors["blue"],
+            background=colors["base02"],
+            padding=10,
+            mouse_callbacks={"Button1": lambda: subprocess.Popen(["bash", f"{CONFIG_DIR}/system_menu.sh"])},
+        ),
+        widget.GroupBox(
+            fontsize=14,
+            # Text colors - clear visual hierarchy
+            active=colors["yellow"],  # Groups with windows (not current) = YELLOW
+            inactive=colors["base01"],  # Empty groups = dark gray
+            # Highlight method
+            highlight_method="block",
+            # Border colors - THIS SCREEN
+            this_current_screen_border=colors["cyan"],  # ← YOUR ACTIVE GROUP (cyan border!)
+            this_screen_border=colors["base02"],  # Other groups on this screen
+            # Border colors - OTHER SCREENS
+            other_current_screen_border=colors["blue"],  # Active on other screen (blue)
+            other_screen_border=colors["base02"],  # Other groups on other screens
+            # Special states
+            urgent_border=colors["red"],
+            # Background colors
+            background=colors["base03"],
+            highlight_color=colors["base02"],
+            block_highlight_text_color=colors["base3"],  # Current group = BRIGHT WHITE
+            # Filter to show only this screen's groups (1-9 for this screen)
+            visible_groups=[f"screen{screen_index}_{i}" for i in range(1, 10)],
+            # Style
+            rounded=False,
+            padding_x=10,
+            padding_y=8,
+            borderwidth=3,
+            disable_drag=True,
+            use_mouse_wheel=False,
+        ),
+        powerline_sep(colors["base03"], colors["base02"]),
+        widget.CurrentLayout(
+            foreground=colors["yellow"],
+            background=colors["base02"],
+            padding=10,
+            fmt=" {}",
+        ),
+        powerline_sep(colors["base02"], colors["base03"]),
+        widget.Prompt(
+            foreground=colors["green"],
+            background=colors["base03"],
+            prompt="  ",
+        ),
+        widget.WindowName(
+            foreground=colors["base0"],
+            background=colors["base03"],
+            max_chars=60,
+            padding=10,
+        ),
+        *sysinfo,
+    ]
+
     # Add systray only to primary screen
     if include_systray:
         widgets.append(
@@ -207,23 +215,17 @@ def create_bar(include_systray=True, screen_index=0):
                 padding=8,
             )
         )
-
-    # QuickExit on all screens
     widgets.append(
-        widget.QuickExit(
-            foreground=colors["base3"],
+        widget.TextBox(
+            text=" ",
             background=colors["orange"],
-            default_text=" ",
-            countdown_format=" [{}]",
-            padding=10,
-            fontsize=16,
         )
     )
 
     return bar.Bar(
         widgets,
         30,
-        background=colors["base03"],
+        background=colors["base02"],
         margin=[8, 8, 0, 8],
         opacity=0.95,
     )
