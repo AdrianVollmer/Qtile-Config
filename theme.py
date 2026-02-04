@@ -132,8 +132,8 @@ def create_sysinfo():
                         "--undecorated",
                         "--close-on-unfocus",
                         "--no-buttons",
-                        "--posx=-10",
-                        "--posy=40",
+                        "--mouse",
+                        "--skip-taskbar",
                     ]
                 )
             },
