@@ -75,9 +75,9 @@ def create_bar(include_systray=True, screen_index=0):
         ),
         widget.GroupBox(
             fontsize=14,
-            # Text colors - simple and clear
-            active=colors["base0"],           # Groups with windows = light gray text
-            inactive=colors["base01"],        # Empty groups = darker gray text
+            # Text colors - clear visual hierarchy
+            active=colors["yellow"],          # Groups with windows (not current) = YELLOW
+            inactive=colors["base01"],        # Empty groups = dark gray
             # Highlight method
             highlight_method="block",
             # Border colors - THIS SCREEN
@@ -91,7 +91,7 @@ def create_bar(include_systray=True, screen_index=0):
             # Background colors
             background=colors["base03"],
             highlight_color=colors["base02"],
-            block_highlight_text_color=colors["base3"],    # Current group = bright text
+            block_highlight_text_color=colors["base3"],    # Current group = BRIGHT WHITE
             # Filter to show only this screen's groups (1-9 for this screen)
             visible_groups=[f"screen{screen_index}_{i}" for i in range(1, 10)],
             # Style
