@@ -34,8 +34,14 @@ for vt in range(1, 8):
         )
     )
 
-# Screen configuration
-screens = [Screen(top=create_bar())]
+# Screen configuration - create bars for all monitors
+# Qtile will automatically use as many screens as you have monitors
+# Only the first screen gets the systray
+screens = [
+    Screen(top=create_bar(include_systray=True)),   # Primary screen with systray
+    Screen(top=create_bar(include_systray=False)),  # Secondary screens without systray
+    Screen(top=create_bar(include_systray=False)),
+]
 
 # Mouse bindings
 mouse = [

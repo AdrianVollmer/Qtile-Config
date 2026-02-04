@@ -61,10 +61,9 @@ def powerline_sep(fg_color, bg_color, direction="left"):
         )
 
 
-def create_bar():
+def create_bar(include_systray=True):
     """Create the status bar with widgets"""
-    return bar.Bar(
-        [
+    widgets = [
             # Left side - Logo and groups
             widget.TextBox(
                 text="\uf013",  # Settings/menu icon
@@ -183,19 +182,31 @@ def create_bar():
                 },
             ),
             powerline_sep(colors["orange"], colors["yellow"], direction="right"),
+    ]
+
+    # Add systray only to primary screen
+    if include_systray:
+        widgets.append(
             widget.Systray(
                 background=colors["orange"],
                 padding=8,
-            ),
-            widget.QuickExit(
-                foreground=colors["base3"],
-                background=colors["orange"],
-                default_text=" ",
-                countdown_format=" [{}]",
-                padding=10,
-                fontsize=16,
-            ),
-        ],
+            )
+        )
+
+    # QuickExit on all screens
+    widgets.append(
+        widget.QuickExit(
+            foreground=colors["base3"],
+            background=colors["orange"],
+            default_text=" ",
+            countdown_format=" [{}]",
+            padding=10,
+            fontsize=16,
+        )
+    )
+
+    return bar.Bar(
+        widgets,
         30,
         background=colors["base03"],
         margin=[8, 8, 0, 8],
