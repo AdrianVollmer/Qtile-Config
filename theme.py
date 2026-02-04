@@ -177,7 +177,7 @@ def create_bar(include_systray=True, screen_index=0):
         widget.Clock(
             foreground=colors["base03"],
             background=colors["yellow"],
-            format="\uf017 %a %b %d  %I:%M %p",
+            format="\uf017 %a %b %d  %H:%M",
             padding=10,
             update_interval=1.0,
             mouse_callbacks={
