@@ -1,6 +1,6 @@
 """
 AwesomeWM-style workspace configuration
-Each workspace spans all screens, similar to AwesomeWM tags
+Workspace sticks to screen, similar to AwesomeWM tags
 """
 
 from libqtile.config import Group, Key
@@ -25,19 +25,20 @@ def create_groups(num_screens=None):
             groups.append(
                 Group(
                     name=f"screen{screen}_{workspace}",  # Internal name
-                    label=str(workspace),                 # Display label (1-9)
+                    label=str(workspace),  # Display label (1-9)
                 )
             )
     return groups
 
 
-def switch_all_screens_to_workspace(qtile, workspace_num):
-    """Switch all screens to workspace N (AwesomeWM style)"""
-    for screen_idx, screen in enumerate(qtile.screens):
-        group_name = f"screen{screen_idx}_{workspace_num}"
-        if group_name in qtile.groups_map:
-            group = qtile.groups_map[group_name]
-            screen.set_group(group)
+def switch_current_screen_to_workspace(qtile, workspace_num):
+    """Switch current screen to workspace N (AwesomeWM style)"""
+    screen_idx = qtile.current_screen.index
+    screen = qtile.screens[screen_idx]
+    group_name = f"screen{screen_idx}_{workspace_num}"
+    if group_name in qtile.groups_map:
+        group = qtile.groups_map[group_name]
+        screen.set_group(group)
 
 
 def move_window_to_workspace(qtile, workspace_num):
@@ -61,11 +62,11 @@ def create_workspace_keys(mod):
     for i in range(1, 10):
         keys.extend(
             [
-                # mod + number = switch ALL screens to workspace N
+                # mod + number = switch current screen to workspace N
                 Key(
                     [mod],
                     str(i),
-                    lazy.function(switch_all_screens_to_workspace, i),
+                    lazy.function(switch_current_screen_to_workspace, i),
                     desc=f"Switch all screens to workspace {i}",
                 ),
                 # mod + shift + number = move window to workspace N on current screen
@@ -85,12 +86,14 @@ def init_workspaces_hook():
     Hook to initialize each screen to workspace 1 on startup
     Returns a function to be used with @hook.subscribe.startup
     """
+
     def init():
-        qtile_obj = __import__('libqtile').qtile
+        qtile_obj = __import__("libqtile").qtile
         for screen_idx, screen in enumerate(qtile_obj.screens):
             group_name = f"screen{screen_idx}_1"
             if group_name in qtile_obj.groups_map:
                 qtile_obj.groups_map[group_name].toscreen(screen)
+
     return init
 
 
@@ -99,8 +102,9 @@ def screen_change_hook():
     Hook to handle screen changes (monitors added/removed)
     Returns a function to be used with @hook.subscribe.screen_change
     """
+
     def on_screen_change(event):
-        qtile_obj = __import__('libqtile').qtile
+        qtile_obj = __import__("libqtile").qtile
         # Re-initialize workspaces for all current screens
         for screen_idx, screen in enumerate(qtile_obj.screens):
             # Get the current group for this screen, or default to workspace 1
@@ -113,4 +117,5 @@ def screen_change_hook():
                 group_name = f"screen{screen_idx}_1"
                 if group_name in qtile_obj.groups_map:
                     qtile_obj.groups_map[group_name].toscreen(screen)
+
     return on_screen_change
