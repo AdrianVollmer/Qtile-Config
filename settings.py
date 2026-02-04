@@ -19,6 +19,7 @@ workspace_mode = "awesomewm"
 
 # Autostart programs - add your startup applications here
 autostart_programs = [
+    "autorandr --change",
     "flameshot",
     "picom",  # Compositor for effects/transparency
     "nm-applet",  # Network manager applet
@@ -44,7 +45,7 @@ user_float_rules = [
 # Modifiers use the 'mod' variable defined above
 custom_keys = [
     ([mod], "z", "xscreensaver-command -lock", "Lock screen"),
-    ([mod], "u", "pass-dmenu.sh", "Pass Menu"),
+    ([mod], "u", "passmenu.sh", "Pass Menu"),
     # Example: Launch rofi app launcher
     # ([mod], "p", "rofi -show drun", "Launch app launcher"),
     # Example: Take screenshot
