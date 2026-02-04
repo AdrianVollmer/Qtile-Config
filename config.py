@@ -38,9 +38,9 @@ for vt in range(1, 8):
 # Qtile will automatically use as many screens as you have monitors
 # Only the first screen gets the systray
 screens = [
-    Screen(top=create_bar(include_systray=True)),   # Primary screen with systray
-    Screen(top=create_bar(include_systray=False)),  # Secondary screens without systray
-    Screen(top=create_bar(include_systray=False)),
+    Screen(top=create_bar(include_systray=True, screen_index=0)),
+    Screen(top=create_bar(include_systray=False, screen_index=1)),
+    Screen(top=create_bar(include_systray=False, screen_index=2)),
 ]
 
 # Mouse bindings
@@ -83,3 +83,14 @@ def autostart():
     """Run autostart programs once on qtile startup"""
     for program in autostart_programs:
         subprocess.Popen(program.split())
+
+
+# Initialize AwesomeWM-style workspaces
+@hook.subscribe.startup
+def init_workspaces():
+    """Initialize each screen to workspace 1"""
+    qtile_obj = __import__('libqtile').qtile
+    for screen_idx, screen in enumerate(qtile_obj.screens):
+        group_name = f"screen{screen_idx}_1"
+        if group_name in qtile_obj.groups_map:
+            qtile_obj.groups_map[group_name].toscreen(screen)

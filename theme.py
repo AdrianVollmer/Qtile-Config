@@ -61,7 +61,7 @@ def powerline_sep(fg_color, bg_color, direction="left"):
         )
 
 
-def create_bar(include_systray=True):
+def create_bar(include_systray=True, screen_index=0):
     """Create the status bar with widgets"""
     widgets = [
         # Left side - Logo and groups
@@ -92,6 +92,8 @@ def create_bar(include_systray=True):
             background=colors["base03"],
             highlight_color=colors["base02"],
             block_highlight_text_color=colors["base3"],    # Current group = bright text
+            # Filter to show only this screen's groups (1-9 for this screen)
+            visible_groups=[f"screen{screen_index}_{i}" for i in range(1, 10)],
             # Style
             rounded=False,
             padding_x=10,

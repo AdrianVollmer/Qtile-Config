@@ -9,21 +9,31 @@ from settings import mod, custom_keys  # noqa
 
 
 def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
-    i = qtile.screens.index(qtile.current_screen)
-    new_i = (i + 1) % len(qtile.screens)
-    group = qtile.screens[new_i].group.name
-    qtile.current_window.togroup(group, switch_group=switch_group)
-    if switch_screen is True:
-        qtile.cmd_to_screen(new_i)
+    """Move window to previous screen, keeping it in the same workspace"""
+    current_screen = qtile.current_screen.index
+    new_screen = (current_screen + 1) % len(qtile.screens)
+    # Extract workspace number from current group name (e.g., "screen0_3" -> 3)
+    current_group = qtile.current_group.name
+    workspace_num = current_group.split('_')[1] if '_' in current_group else '1'
+    # Move to same workspace on new screen
+    target_group = f"screen{new_screen}_{workspace_num}"
+    qtile.current_window.togroup(target_group, switch_group=switch_group)
+    if switch_screen:
+        qtile.cmd_to_screen(new_screen)
 
 
 def window_to_next_screen(qtile, switch_group=False, switch_screen=False):
-    i = qtile.screens.index(qtile.current_screen)
-    new_i = (i - 1) % len(qtile.screens)
-    group = qtile.screens[new_i].group.name
-    qtile.current_window.togroup(group, switch_group=switch_group)
-    if switch_screen is True:
-        qtile.cmd_to_screen(new_i)
+    """Move window to next screen, keeping it in the same workspace"""
+    current_screen = qtile.current_screen.index
+    new_screen = (current_screen - 1) % len(qtile.screens)
+    # Extract workspace number from current group name
+    current_group = qtile.current_group.name
+    workspace_num = current_group.split('_')[1] if '_' in current_group else '1'
+    # Move to same workspace on new screen
+    target_group = f"screen{new_screen}_{workspace_num}"
+    qtile.current_window.togroup(target_group, switch_group=switch_group)
+    if switch_screen:
+        qtile.cmd_to_screen(new_screen)
 
 
 # Keybindings
@@ -62,26 +72,54 @@ keys = [
     Key([mod], "o", lazy.function(window_to_previous_screen, switch_screen=True)),
 ]
 
-# Workspace groups
-groups = [Group(name=str(i), label=str(i)) for i in range(1, 10)]
+# AwesomeWM-style workspaces: N screens × 9 workspaces
+NUM_SCREENS = 3  # Adjust to your monitor count
 
-# Add group keybindings
+# Create N×9 groups internally, labeled 1-9 for display
+groups = []
+for screen in range(NUM_SCREENS):
+    for workspace in range(1, 10):
+        groups.append(
+            Group(
+                name=f"screen{screen}_{workspace}",  # Internal name
+                label=str(workspace),                 # Display label
+            )
+        )
+
+
+def switch_all_screens_to_workspace(qtile, workspace_num):
+    """Switch all screens to workspace N (AwesomeWM style)"""
+    for screen_idx, screen in enumerate(qtile.screens):
+        group_name = f"screen{screen_idx}_{workspace_num}"
+        if group_name in qtile.groups_map:
+            group = qtile.groups_map[group_name]
+            screen.set_group(group)
+
+
+def move_window_to_workspace(qtile, workspace_num):
+    """Move window to workspace N on current screen"""
+    screen_idx = qtile.current_screen.index
+    group_name = f"screen{screen_idx}_{workspace_num}"
+    qtile.current_window.togroup(group_name)
+
+
+# Add group keybindings - AwesomeWM style
 for i in range(1, 10):
     keys.extend(
         [
-            # mod + number = switch to workspace (if on another screen, switch to that screen)
+            # mod + number = switch ALL screens to workspace N
             Key(
                 [mod],
                 str(i),
-                lazy.group[str(i)].toscreen(),
-                desc=f"Switch to workspace {i}",
+                lazy.function(switch_all_screens_to_workspace, i),
+                desc=f"Switch all screens to workspace {i}",
             ),
-            # mod + shift + number = move window to workspace and follow
+            # mod + shift + number = move window to workspace N on current screen
             Key(
                 [mod, "shift"],
                 str(i),
-                lazy.window.togroup(str(i), switch_group=True),
-                desc=f"Move window to workspace {i} and switch",
+                lazy.function(move_window_to_workspace, i),
+                desc=f"Move window to workspace {i}",
             ),
         ]
     )
