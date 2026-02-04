@@ -15,6 +15,7 @@ from settings import mod, terminal, autostart_programs
 from theme import create_bar, widget_defaults, extension_defaults  # noqa
 from layouts import layouts, floating_layout  # noqa
 from keys import keys, groups  # noqa
+from workspaces_awesomewm import init_workspaces_hook
 
 # Terminal setup
 if terminal is None:
@@ -34,14 +35,15 @@ for vt in range(1, 8):
         )
     )
 
-# Screen configuration - create bars for all monitors
-# Qtile will automatically use as many screens as you have monitors
+# Screen configuration - create bars for all monitors (auto-detect up to 6)
+# Qtile will automatically use only the screens that match physical monitors
 # Only the first screen gets the systray
-screens = [
-    Screen(top=create_bar(include_systray=True, screen_index=0)),
-    Screen(top=create_bar(include_systray=False, screen_index=1)),
-    Screen(top=create_bar(include_systray=False, screen_index=2)),
-]
+MAX_SCREENS = 6
+screens = []
+for i in range(MAX_SCREENS):
+    screens.append(
+        Screen(top=create_bar(include_systray=(i == 0), screen_index=i))
+    )
 
 # Mouse bindings
 mouse = [
@@ -89,8 +91,4 @@ def autostart():
 @hook.subscribe.startup
 def init_workspaces():
     """Initialize each screen to workspace 1"""
-    qtile_obj = __import__('libqtile').qtile
-    for screen_idx, screen in enumerate(qtile_obj.screens):
-        group_name = f"screen{screen_idx}_1"
-        if group_name in qtile_obj.groups_map:
-            qtile_obj.groups_map[group_name].toscreen(screen)
+    init_workspaces_hook()()

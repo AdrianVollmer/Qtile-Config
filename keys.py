@@ -6,6 +6,12 @@ This file is mostly shareable - mod key is imported from settings
 from libqtile.config import Key, Group
 from libqtile.lazy import lazy
 from settings import mod, custom_keys  # noqa
+from workspaces_awesomewm import (
+    create_groups,
+    create_workspace_keys,
+    move_window_to_workspace,
+    switch_all_screens_to_workspace,
+)
 
 
 def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
@@ -74,57 +80,11 @@ keys = [
     Key([mod], "o", lazy.function(window_to_previous_screen, switch_screen=True)),
 ]
 
-# AwesomeWM-style workspaces: N screens × 9 workspaces
-NUM_SCREENS = 3  # Adjust to your monitor count
+# AwesomeWM-style workspaces (auto-detects screens, max 6)
+groups = create_groups()
 
-# Create N×9 groups internally, labeled 1-9 for display
-groups = []
-for screen in range(NUM_SCREENS):
-    for workspace in range(1, 10):
-        groups.append(
-            Group(
-                name=f"screen{screen}_{workspace}",  # Internal name
-                label=str(workspace),  # Display label
-            )
-        )
-
-
-def switch_all_screens_to_workspace(qtile, workspace_num):
-    """Switch all screens to workspace N (AwesomeWM style)"""
-    for screen_idx, screen in enumerate(qtile.screens):
-        group_name = f"screen{screen_idx}_{workspace_num}"
-        if group_name in qtile.groups_map:
-            group = qtile.groups_map[group_name]
-            screen.set_group(group)
-
-
-def move_window_to_workspace(qtile, workspace_num):
-    """Move window to workspace N on current screen"""
-    screen_idx = qtile.current_screen.index
-    group_name = f"screen{screen_idx}_{workspace_num}"
-    qtile.current_window.togroup(group_name)
-
-
-# Add group keybindings - AwesomeWM style
-for i in range(1, 10):
-    keys.extend(
-        [
-            # mod + number = switch ALL screens to workspace N
-            Key(
-                [mod],
-                str(i),
-                lazy.function(switch_all_screens_to_workspace, i),
-                desc=f"Switch all screens to workspace {i}",
-            ),
-            # mod + shift + number = move window to workspace N on current screen
-            Key(
-                [mod, "shift"],
-                str(i),
-                lazy.function(move_window_to_workspace, i),
-                desc=f"Move window to workspace {i}",
-            ),
-        ]
-    )
+# Add workspace keybindings
+keys.extend(create_workspace_keys(mod))
 
 # Add custom user keybindings from settings
 for modifiers, key, command, desc in custom_keys:

@@ -26,7 +26,13 @@ This qtile configuration is modularized for easy maintenance and sharing.
   - Window navigation (hjkl)
   - Window movement
   - Layout switching
-  - Workspace groups
+  - Workspace groups (imports from workspaces module)
+
+- **workspaces_awesomewm.py** - AwesomeWM-style workspace behavior
+  - Workspaces that span all screens
+  - Switching workspaces changes all monitors simultaneously
+  - Moving windows between screens preserves workspace
+  - Auto-detects number of monitors (supports up to 6)
 
 - **config.py** - Main configuration
   - Imports all modules
