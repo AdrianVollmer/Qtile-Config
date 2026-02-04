@@ -92,3 +92,25 @@ def init_workspaces_hook():
             if group_name in qtile_obj.groups_map:
                 qtile_obj.groups_map[group_name].toscreen(screen)
     return init
+
+
+def screen_change_hook():
+    """
+    Hook to handle screen changes (monitors added/removed)
+    Returns a function to be used with @hook.subscribe.screen_change
+    """
+    def on_screen_change(event):
+        qtile_obj = __import__('libqtile').qtile
+        # Re-initialize workspaces for all current screens
+        for screen_idx, screen in enumerate(qtile_obj.screens):
+            # Get the current group for this screen, or default to workspace 1
+            current_group = screen.group
+            if current_group and current_group.name.startswith(f"screen{screen_idx}_"):
+                # Screen already has a valid group
+                continue
+            else:
+                # Initialize to workspace 1
+                group_name = f"screen{screen_idx}_1"
+                if group_name in qtile_obj.groups_map:
+                    qtile_obj.groups_map[group_name].toscreen(screen)
+    return on_screen_change

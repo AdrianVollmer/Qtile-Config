@@ -15,7 +15,7 @@ from settings import mod, terminal, autostart_programs
 from theme import create_bar, widget_defaults, extension_defaults  # noqa
 from layouts import layouts, floating_layout  # noqa
 from keys import keys, groups  # noqa
-from workspaces_awesomewm import init_workspaces_hook
+from workspaces_awesomewm import init_workspaces_hook, screen_change_hook
 
 # Terminal setup
 if terminal is None:
@@ -92,3 +92,10 @@ def autostart():
 def init_workspaces():
     """Initialize each screen to workspace 1"""
     init_workspaces_hook()()
+
+
+# Handle monitor changes (plug/unplug)
+@hook.subscribe.screen_change
+def on_screen_change(event):
+    """Reinitialize workspaces when monitors are added/removed"""
+    screen_change_hook()(event)

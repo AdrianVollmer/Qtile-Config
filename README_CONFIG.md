@@ -33,6 +33,7 @@ This qtile configuration is modularized for easy maintenance and sharing.
   - Switching workspaces changes all monitors simultaneously
   - Moving windows between screens preserves workspace
   - Auto-detects number of monitors (supports up to 6)
+  - Handles hot-plugging monitors (dock/undock laptop)
 
 - **config.py** - Main configuration
   - Imports all modules
