@@ -14,7 +14,7 @@ def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
     new_screen = (current_screen + 1) % len(qtile.screens)
     # Extract workspace number from current group name (e.g., "screen0_3" -> 3)
     current_group = qtile.current_group.name
-    workspace_num = current_group.split('_')[1] if '_' in current_group else '1'
+    workspace_num = current_group.split("_")[1] if "_" in current_group else "1"
     # Move to same workspace on new screen
     target_group = f"screen{new_screen}_{workspace_num}"
     qtile.current_window.togroup(target_group, switch_group=switch_group)
@@ -28,7 +28,7 @@ def window_to_next_screen(qtile, switch_group=False, switch_screen=False):
     new_screen = (current_screen - 1) % len(qtile.screens)
     # Extract workspace number from current group name
     current_group = qtile.current_group.name
-    workspace_num = current_group.split('_')[1] if '_' in current_group else '1'
+    workspace_num = current_group.split("_")[1] if "_" in current_group else "1"
     # Move to same workspace on new screen
     target_group = f"screen{new_screen}_{workspace_num}"
     qtile.current_window.togroup(target_group, switch_group=switch_group)
@@ -67,7 +67,9 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    # Screen managment
+    # Screen management
+    Key([mod], "comma", lazy.next_screen(), desc="Focus next screen"),
+    Key([mod], "period", lazy.prev_screen(), desc="Focus previous screen"),
     Key([mod], "p", lazy.function(window_to_next_screen, switch_screen=True)),
     Key([mod], "o", lazy.function(window_to_previous_screen, switch_screen=True)),
 ]
@@ -82,7 +84,7 @@ for screen in range(NUM_SCREENS):
         groups.append(
             Group(
                 name=f"screen{screen}_{workspace}",  # Internal name
-                label=str(workspace),                 # Display label
+                label=str(workspace),  # Display label
             )
         )
 
