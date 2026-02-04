@@ -44,6 +44,15 @@ Edit `settings.py` and add Match rules to the `user_float_rules` list. Use `xpro
 ### To customize the system menu:
 Edit `system_menu.sh` to add/remove menu options or change commands. The menu appears when clicking the settings icon (⚙) in the bar.
 
+### To add custom keybindings:
+Edit `settings.py` and add entries to the `custom_keys` list:
+```python
+custom_keys = [
+    ([mod], "p", "rofi -show drun", "Launch app launcher"),
+    ([mod, "shift"], "s", "flameshot gui", "Take screenshot"),
+]
+```
+
 ### To change colors or bar appearance:
 Edit `theme.py` - you can change the color scheme or modify the bar layout.
 
@@ -70,6 +79,6 @@ Edit `keys.py` to change keyboard shortcuts.
 - Cascadia Code NF (or another Nerd Font)
 - yad (for calendar popup)
 - rofi (for system menu dropdown)
-- i3lock (optional, for screen locking)
+- i3lock/xscreensaver-command (optional, for screen locking)
 - picom (optional, for effects)
 - flameshot (optional, for screenshots)

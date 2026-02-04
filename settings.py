@@ -3,7 +3,8 @@ User-specific settings
 Customize this file for your system
 """
 
-from libqtile.config import Match
+from libqtile.config import Match  # noqa
+
 
 # Modifier key (mod4 = Super/Windows key, mod1 = Alt)
 mod = "mod4"
@@ -16,6 +17,9 @@ autostart_programs = [
     "flameshot",
     "picom",  # Compositor for effects/transparency
     "nm-applet",  # Network manager applet
+    "zoom",
+    "firefox",
+    "gnome-terminal -- tmux a",
     # "nitrogen --restore",  # Wallpaper
 ]
 
@@ -24,4 +28,19 @@ autostart_programs = [
 user_float_rules = [
     # Match(wm_class="myapp"),
     # Match(title="My Floating Window"),
+]
+
+
+# Custom keybindings
+# Format: (modifiers, key, command, description)
+# Modifiers use the 'mod' variable defined above
+custom_keys = [
+    ([mod], "z", "xscreensaver-command -lock", "Lock screen"),
+    ([mod], "u", "pass-dmenu.sh", "Pass Menu"),
+    # Example: Launch rofi app launcher
+    # ([mod], "p", "rofi -show drun", "Launch app launcher"),
+    # Example: Take screenshot
+    # ([mod, "shift"], "s", "flameshot gui", "Take screenshot"),
+    # Example: Launch browser
+    # ([mod], "b", "firefox", "Launch browser"),
 ]
