@@ -25,7 +25,7 @@ autostart_programs = [
     "nm-applet",  # Network manager applet
     "zoom",
     "firefox",
-    "gnome-terminal -- tmux a",
+    "gnome-terminal -- fish -c 'tmux a||tmux'",
     "virt-manager --show-systray",
     # "nitrogen --restore",  # Wallpaper
 ]
@@ -37,6 +37,7 @@ user_float_rules = [
     # Match(title="My Floating Window"),
     Match(title="Zoom Workplace"),  # All zoom windows except the main ("Zoom Workplace - Licensed account")
     Match(wm_class="zoom_linux_float_video_window"),  # Floating video
+    Match(wm_class="pinentry-gtk-2"),
 ]
 
 
@@ -46,6 +47,7 @@ user_float_rules = [
 custom_keys = [
     ([mod], "z", "xscreensaver-command -lock", "Lock screen"),
     ([mod], "u", "passmenu.sh", "Pass Menu"),
+    ([], "Print", "flameshot gui", "Flameshot"),
     # Example: Launch rofi app launcher
     # ([mod], "p", "rofi -show drun", "Launch app launcher"),
     # Example: Take screenshot
