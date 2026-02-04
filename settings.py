@@ -12,6 +12,11 @@ mod = "mod4"
 # Terminal emulator (will auto-detect if not specified)
 terminal = None  # Set to "alacritty", "kitty", etc. or None for auto-detect
 
+# Workspace mode: "awesomewm" or "standard"
+# - awesomewm: Workspaces span all screens (switching workspace changes all monitors)
+# - standard: Workspaces float between screens (qtile default)
+workspace_mode = "awesomewm"
+
 # Autostart programs - add your startup applications here
 autostart_programs = [
     "flameshot",

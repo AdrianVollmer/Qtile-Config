@@ -11,11 +11,16 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 # Import modular configuration
-from settings import mod, terminal, autostart_programs
+from settings import mod, terminal, autostart_programs, workspace_mode
 from theme import create_bar, widget_defaults, extension_defaults  # noqa
 from layouts import layouts, floating_layout  # noqa
 from keys import keys, groups  # noqa
-from workspaces_awesomewm import init_workspaces_hook, screen_change_hook
+
+# Import workspace hooks based on mode
+if workspace_mode == "awesomewm":
+    from workspaces_awesomewm import init_workspaces_hook, screen_change_hook
+else:
+    from workspaces_standard import init_workspaces_hook, screen_change_hook
 
 # Terminal setup
 if terminal is None:

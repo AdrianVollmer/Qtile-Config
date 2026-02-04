@@ -5,13 +5,13 @@ This file is mostly shareable - mod key is imported from settings
 
 from libqtile.config import Key, Group
 from libqtile.lazy import lazy
-from settings import mod, custom_keys  # noqa
-from workspaces_awesomewm import (
-    create_groups,
-    create_workspace_keys,
-    move_window_to_workspace,
-    switch_all_screens_to_workspace,
-)
+from settings import mod, custom_keys, workspace_mode  # noqa
+
+# Import workspace module based on mode
+if workspace_mode == "awesomewm":
+    from workspaces_awesomewm import create_groups, create_workspace_keys
+else:
+    from workspaces_standard import create_groups, create_workspace_keys
 
 
 def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):

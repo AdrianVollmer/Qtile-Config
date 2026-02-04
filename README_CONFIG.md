@@ -35,12 +35,37 @@ This qtile configuration is modularized for easy maintenance and sharing.
   - Auto-detects number of monitors (supports up to 6)
   - Handles hot-plugging monitors (dock/undock laptop)
 
+- **workspaces_standard.py** - Standard qtile workspace behavior
+  - Workspaces float between screens
+  - Traditional qtile workspace model
+
 - **config.py** - Main configuration
   - Imports all modules
   - Combines everything
   - Hooks and startup
 
 ## Customization
+
+### To switch workspace modes:
+
+Edit `settings.py` and change one line:
+
+```python
+# Choose your workspace behavior:
+workspace_mode = "awesomewm"  # Workspaces span all screens
+# OR
+workspace_mode = "standard"   # Workspaces float between screens (qtile default)
+```
+
+**AwesomeWM mode:**
+- Pressing `Mod+2` switches ALL screens to workspace 2
+- Each monitor shows the same workspace simultaneously
+- Moving windows between screens keeps them in the same workspace
+
+**Standard mode:**
+- Pressing `Mod+2` switches to workspace 2 (may change screens)
+- Each screen independently shows one workspace
+- Workspaces "float" to whichever screen is viewing them
 
 ### To change autostart programs:
 Edit `settings.py` and modify the `autostart_programs` list.
