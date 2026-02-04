@@ -25,6 +25,7 @@ autostart_programs = [
     "zoom",
     "firefox",
     "gnome-terminal -- tmux a",
+    "virt-manager --show-systray",
     # "nitrogen --restore",  # Wallpaper
 ]
 
@@ -33,6 +34,10 @@ autostart_programs = [
 user_float_rules = [
     # Match(wm_class="myapp"),
     # Match(title="My Floating Window"),
+    #  Match(wm_class="zoom"),  # Generic zoom match
+    #  Match(title="zoom"),  # Sometimes needed for popups
+    Match(wm_class="Zoom Meetings"),  # Some older versions
+    Match(wm_class="zoom_linux_float_video_window"),  # Floating video
 ]
 
 
