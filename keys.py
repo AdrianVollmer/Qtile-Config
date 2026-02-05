@@ -3,7 +3,7 @@ Keybindings and workspace groups
 This file is mostly shareable - mod key is imported from settings
 """
 
-from libqtile.config import Key, Group
+from libqtile.config import Key
 from libqtile.lazy import lazy
 from settings import mod, custom_keys, workspace_mode  # noqa
 

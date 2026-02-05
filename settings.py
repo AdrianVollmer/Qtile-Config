@@ -25,7 +25,7 @@ autostart_programs = [
     "nm-applet",  # Network manager applet
     "zoom",
     "firefox",
-    "gnome-terminal -- fish -c 'tmux a||tmux'",
+    'gnome-terminal -- fish -c "tmux a||tmux"',
     "virt-manager --show-systray",
     # "nitrogen --restore",  # Wallpaper
 ]
