@@ -2,7 +2,12 @@
 
 This qtile configuration is modularized for easy maintenance and sharing.
 
-Needs qtile-extras. Recommendation:
+Needs qtile-extras.
+
+## Installation
+
+Since we need qtile-extras, let's install the python dependencies in its own
+venv:
 
 ```
 $ pwd
@@ -23,6 +28,11 @@ Type=Application
 Keywords=wm;tiling
 ```
 
+Then link the config:
+
+```
+ln -s /path/to/this/repo ~/.config/qtile
+```
 
 ## File Structure
 
