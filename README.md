@@ -4,6 +4,8 @@ This qtile configuration is modularized for easy maintenance and sharing.
 
 Needs qtile-extras.
 
+![screenshot](/screenshot.png)
+
 ## Installation
 
 Since we need qtile-extras, let's install the python dependencies in its own
