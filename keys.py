@@ -15,28 +15,22 @@ else:
 
 
 def window_to_previous_screen(qtile, switch_group=False, switch_screen=False):
-    """Move window to previous screen, keeping it in the same workspace"""
+    """Move window to previous screen to its currently active group"""
     current_screen = qtile.current_screen.index
     new_screen = (current_screen + 1) % len(qtile.screens)
-    # Extract workspace number from current group name (e.g., "screen0_3" -> 3)
-    current_group = qtile.current_group.name
-    workspace_num = current_group.split("_")[1] if "_" in current_group else "1"
-    # Move to same workspace on new screen
-    target_group = f"screen{new_screen}_{workspace_num}"
+    # Get the currently active group on the target screen
+    target_group = qtile.screens[new_screen].group.name
     qtile.current_window.togroup(target_group, switch_group=switch_group)
     if switch_screen:
         qtile.cmd_to_screen(new_screen)
 
 
 def window_to_next_screen(qtile, switch_group=False, switch_screen=False):
-    """Move window to next screen, keeping it in the same workspace"""
+    """Move window to next screen to its currently active group"""
     current_screen = qtile.current_screen.index
     new_screen = (current_screen - 1) % len(qtile.screens)
-    # Extract workspace number from current group name
-    current_group = qtile.current_group.name
-    workspace_num = current_group.split("_")[1] if "_" in current_group else "1"
-    # Move to same workspace on new screen
-    target_group = f"screen{new_screen}_{workspace_num}"
+    # Get the currently active group on the target screen
+    target_group = qtile.screens[new_screen].group.name
     qtile.current_window.togroup(target_group, switch_group=switch_group)
     if switch_screen:
         qtile.cmd_to_screen(new_screen)
