@@ -2,6 +2,28 @@
 
 This qtile configuration is modularized for easy maintenance and sharing.
 
+Needs qtile-extras. Recommendation:
+
+```
+$ pwd
+/opt/qtile
+$ cat requirements.txt
+qtile[widgets]
+psutils
+qtile-extras
+$ uv venv && uv pip install -r requirements
+$ cat /usr/share/xsessions/qtile.desktop
+[Desktop Entry]
+Name=Qtile
+Comment=Qtile Session
+#  Exec=/usr/bin/qtile-start
+# Use our qtile installation:
+Exec=/opt/qtile/.venv/bin/qtile start
+Type=Application
+Keywords=wm;tiling
+```
+
+
 ## File Structure
 
 ### User-Specific Files (customize these)
