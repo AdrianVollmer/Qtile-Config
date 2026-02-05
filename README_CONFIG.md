@@ -52,15 +52,14 @@ Edit `settings.py` and change one line:
 
 ```python
 # Choose your workspace behavior:
-workspace_mode = "awesomewm"  # Workspaces span all screens
+workspace_mode = "awesomewm"  # Each workspace lives on its screen so we have 3*N workspaces
 # OR
 workspace_mode = "standard"   # Workspaces float between screens (qtile default)
 ```
 
 **AwesomeWM mode:**
-- Pressing `Mod+2` switches ALL screens to workspace 2
-- Each monitor shows the same workspace simultaneously
-- Moving windows between screens keeps them in the same workspace
+- Pressing `Mod+2` switches to workspace 2 of the focused screen
+- Each monitor has its own set of workspaces
 
 **Standard mode:**
 - Pressing `Mod+2` switches to workspace 2 (may change screens)
