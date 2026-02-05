@@ -35,9 +35,7 @@ layouts = [
 
 # Floating layout configuration
 floating_layout = layout.Floating(
-    border_focus=colors["cyan"],
-    border_normal=colors["base02"],
-    border_width=4,
+    border_width=0,
     float_rules=[
         # Default floating rules
         *layout.Floating.default_float_rules,
