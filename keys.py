@@ -68,10 +68,10 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     # Screen management
-    Key([mod], "comma", lazy.next_screen(), desc="Focus next screen"),
-    Key([mod], "period", lazy.prev_screen(), desc="Focus previous screen"),
-    Key([mod], "p", lazy.function(window_to_next_screen, switch_screen=True)),
-    Key([mod], "o", lazy.function(window_to_previous_screen, switch_screen=True)),
+    Key([mod], "period", lazy.next_screen(), desc="Focus next screen"),
+    Key([mod], "comma", lazy.prev_screen(), desc="Focus previous screen"),
+    Key([mod], "o", lazy.function(window_to_next_screen, switch_screen=True)),
+    Key([mod], "p", lazy.function(window_to_previous_screen, switch_screen=True)),
 ]
 
 # AwesomeWM-style workspaces (auto-detects screens, max 6)

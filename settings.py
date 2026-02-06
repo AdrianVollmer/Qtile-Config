@@ -19,6 +19,7 @@ workspace_mode = "awesomewm"
 
 # Autostart programs - add your startup applications here
 autostart_programs = [
+    "pass show dummy",
     "autorandr --change",
     "flameshot",
     "picom",  # Compositor for effects/transparency
