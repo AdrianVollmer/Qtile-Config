@@ -24,7 +24,7 @@ autostart_programs = [
     "flameshot",
     "picom",  # Compositor for effects/transparency
     "nm-applet",  # Network manager applet
-    "zoom",
+    "zoom-in-background.sh",
     "firefox",
     'gnome-terminal -- fish -c "tmux a||tmux"',
     "virt-manager --show-systray",
