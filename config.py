@@ -96,7 +96,7 @@ wmname = "LG3D"
 def autostart():
     """Run autostart programs once on qtile startup"""
     for program in autostart_programs:
-        subprocess.Popen(program.split())
+        subprocess.call(program)
 
 
 # Initialize AwesomeWM-style workspaces
@@ -110,4 +110,5 @@ def init_workspaces():
 @hook.subscribe.screen_change
 def on_screen_change(event):
     """Reinitialize workspaces when monitors are added/removed"""
+    subprocess.call("autorandr -c")
     screen_change_hook()(event)
