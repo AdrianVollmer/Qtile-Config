@@ -209,11 +209,25 @@ def create_bar(sysinfo, include_systray=True, screen_index=0):
 
     # Add systray only to primary screen
     if include_systray:
-        widgets.append(
-            widget.Systray(
-                background=colors["orange"],
-                padding=8,
-            )
+        widgets.extend(
+            [
+                widget.Systray(
+                    background=colors["orange"],
+                    padding=8,
+                ),
+                widget.Notify(
+                    foreground=colors["base03"],
+                    background=colors["orange"],
+                    foreground_urgent=colors["base3"],
+                    background_urgent=colors["red"],
+                    foreground_low=colors["base01"],
+                    background_low=colors["base02"],
+                    fmt="\uf0f3 {}",  # Bell icon
+                    default_timeout=5,
+                    padding=10,
+                    fontsize=16,
+                ),
+            ]
         )
     widgets.append(
         widget.TextBox(
