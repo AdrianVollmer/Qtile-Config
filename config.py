@@ -96,7 +96,7 @@ wmname = "LG3D"
 def autostart():
     """Run autostart programs once on qtile startup"""
     for program in autostart_programs:
-        subprocess.call(program)
+        subprocess.Popen(program, shell=True)
 
 
 # Initialize AwesomeWM-style workspaces
