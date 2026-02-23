@@ -118,4 +118,22 @@ def screen_change_hook():
                 if group_name in qtile_obj.groups_map:
                     qtile_obj.groups_map[group_name].toscreen(screen)
 
+        # Move windows from screens that no longer exist to current screen
+        num_screens = len(qtile_obj.screens)
+        for group in qtile_obj.groups:
+            # Check if this group belongs to a screen that no longer exists
+            if group.name.startswith("screen"):
+                try:
+                    # Extract screen index from group name (format: "screen{idx}_{workspace}")
+                    screen_idx = int(group.name.split("_")[0].replace("screen", ""))
+                    if screen_idx >= num_screens:
+                        # This group belongs to a removed screen
+                        # Move all its windows to current screen's active group
+                        current_group = qtile_obj.current_screen.group
+                        for window in list(group.windows):  # Use list() to avoid modification during iteration
+                            window.togroup(current_group.name)
+                except (ValueError, IndexError):
+                    # Skip groups with invalid naming format
+                    pass
+
     return on_screen_change
