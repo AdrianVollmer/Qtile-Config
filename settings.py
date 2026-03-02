@@ -10,7 +10,7 @@ from libqtile.config import Match  # noqa
 mod = "mod4"
 
 # Terminal emulator (will auto-detect if not specified)
-terminal = "alacritty"  # Set to "alacritty", "kitty", etc. or None for auto-detect
+terminal = "kitty"  # Set to "alacritty", "kitty", etc. or None for auto-detect
 
 # Workspace mode: "awesomewm" or "standard"
 # - awesomewm: Workspaces span all screens (switching workspace changes all monitors)
@@ -26,7 +26,7 @@ autostart_programs = [
     "nm-applet",  # Network manager applet
     "zoom-in-background.sh",
     "firefox",
-    'alacritty -- fish -c "tmux a||tmux"',
+    'kitty -- fish -c "tmux a||tmux"',
     "virt-manager --show-systray",
     # "nitrogen --restore",  # Wallpaper
 ]
