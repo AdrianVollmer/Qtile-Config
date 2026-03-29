@@ -29,6 +29,7 @@ autostart_programs = [
     "firefox",
     'kitty -- fish -c "tmux a||tmux"',
     "virt-manager --show-systray",
+    "parcellite",
     # "nitrogen --restore",  # Wallpaper
 ]
 
