@@ -103,7 +103,7 @@ def screen_change_hook():
     Returns a function to be used with @hook.subscribe.screen_change
     """
 
-    def on_screen_change(event):
+    def on_screen_change(_):
         qtile_obj = __import__("libqtile").qtile
         # Re-initialize workspaces for all current screens
         for screen_idx, screen in enumerate(qtile_obj.screens):

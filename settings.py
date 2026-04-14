@@ -22,6 +22,7 @@ autostart_programs = [
     "pass show dummy",
     "autorandr --change",
     "flameshot",
+    "parcellite",
     "picom",  # Compositor for effects/transparency
     "nm-applet",  # Network manager applet
     "zoom-in-background.sh",
