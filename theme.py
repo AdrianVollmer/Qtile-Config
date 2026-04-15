@@ -119,7 +119,7 @@ def create_sysinfo():
         widget.Clock(
             foreground=colors["base03"],
             background=colors["yellow"],
-            format="\uf017 %a %b %d  %H:%M",
+            format="\uf017 %a %b %d, W%V  %H:%M",
             padding=10,
             update_interval=1.0,
             mouse_callbacks={
