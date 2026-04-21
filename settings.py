@@ -51,6 +51,7 @@ custom_keys = [
     ([mod], "z", "xscreensaver-command -lock", "Lock screen"),
     ([mod], "u", "passmenu.sh", "Pass Menu"),
     ([], "Print", "flameshot gui", "Flameshot"),
+    ([mod], "i", "rofimoji", "Emoji Picker"),
     # Example: Launch rofi app launcher
     # ([mod], "p", "rofi -show drun", "Launch app launcher"),
     # Example: Take screenshot
